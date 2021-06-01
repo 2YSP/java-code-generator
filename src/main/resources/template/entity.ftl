@@ -2,6 +2,7 @@ package ${pkg};
 
 import lombok.Data;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 <#list imports as impt>
 import ${impt};
 </#list>
