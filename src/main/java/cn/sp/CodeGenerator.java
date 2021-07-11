@@ -24,6 +24,11 @@ public class CodeGenerator {
      */
     public static final Integer DATA_TYPE_INDEX = 6;
 
+    /**
+     * 字段注释的index
+     */
+    public static final Integer COLUMN_COMMENT_INDEX = 9;
+
     public static final Map<String, String> FIELD_TYPE_MAPPING = new HashMap<>();
 
     public static final Map<String, String> CLASS_NAME_MAPPING = new HashMap<>();
@@ -94,7 +99,7 @@ public class CodeGenerator {
                     "FROM\n" +
                     "  information_schema.columns \n" +
                     "WHERE table_schema = ? \n" +
-                    "  AND table_name = ? ;  ";
+                    "  AND table_name = ? ORDER BY ordinalPosition ;  ";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, jdbcProperties.getProperty(DB_NAME));
             statement.setString(2, tableName);
@@ -105,6 +110,7 @@ public class CodeGenerator {
                 Map<String, String> map = new HashMap<>();
                 map.put("name", genFieldName(rs.getString(COLUMN_NAME_INDEX)));
                 map.put("type", genFieldType(rs.getString(DATA_TYPE_INDEX)));
+                map.put("comment", rs.getString(COLUMN_COMMENT_INDEX));
                 tableData.add(map);
             }
         } catch (Exception e) {

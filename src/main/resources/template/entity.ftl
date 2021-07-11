@@ -13,11 +13,14 @@ public class ${className}{
 
 <#list fields as field>
     <#if field.name == "id">
-    @TableId
-    private ${field.type} ${field.name};
+        @TableId
+        private ${field.type} ${field.name};
 
     <#else>
-    private ${field.type} ${field.name};
+       /**
+        * ${field.comment}
+        */
+        private ${field.type} ${field.name};
 
     </#if>
 
